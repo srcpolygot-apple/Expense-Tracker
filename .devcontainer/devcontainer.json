@@ -1,5 +1,0 @@
-{
-  "name": "Copilot Dev Environment",
-  "image": "ghcr.io/helpers4/devcontainer/copilot-dev:1"
-}
-
