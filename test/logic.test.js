@@ -4,10 +4,6 @@ const R = L.DEFAULT_RATES, now = new Date(2025, 5, 15);
 const tx = (o) => Object.assign({ type: 'expense', currency: 'USD', category: 'Food', date: '2025-06-10', amount: 10, description: 'x' }, o);
 
 test('convert', () => { assert.equal(L.convert(92, 'EUR', 'USD', R), 100); assert.throws(() => L.convert(1, 'XXX', 'USD', R)); });
-test('voice', () => {
-  const v = L.parseVoice('spent 12.50 on lunch at cafe'); assert.equal(v.amount, 12.5); assert.equal(v.category, 'Food');
-  assert.equal(L.parseVoice('paid twenty dollars for uber').amount, 20); assert.equal(L.parseVoice('hello'), null);
-});
 test('receipt', () => {
   const r = L.parseReceipt('Walmart Supercenter\nMilk 3.49\nSubtotal 3.49\nTax 0.20\nTOTAL 3.69\n2025-06-01');
   assert.equal(r.total, 3.69); assert.equal(r.date, '2025-06-01'); assert.equal(r.merchant, 'Walmart Supercenter'); assert.equal(r.category, 'Groceries');

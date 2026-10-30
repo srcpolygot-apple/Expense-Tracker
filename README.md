@@ -13,7 +13,6 @@ npm test    # unit tests for logic.js
 | 1 | Mobile UI | Responsive, bottom-tab PWA, dark mode, offline via service worker |
 | 2 | Receipt scanning | Tesseract.js OCR (loaded on demand, needs internet) → merchant/total/date/category |
 | 3 | Spending insights | Outliers, duplicate charges, month-over-month spikes, small-purchase totals |
-| 4 | Voice logging | Web Speech API, e.g. "spent 12 on lunch" |
 | 5 | Financial assistant | On-device chat about budgets, top categories, bills, saving tips |
 | 6 | Budget periods | Daily / weekly / monthly / custom, overall or per category |
 | 7 | Summaries | Weekly & monthly totals, pie and 6-month bar charts, CSV export |

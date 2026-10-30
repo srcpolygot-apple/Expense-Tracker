@@ -38,31 +38,6 @@
     return 'Other';
   }
 
-  const NUM_WORDS = { zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
-    eleven: 11, twelve: 12, fifteen: 15, twenty: 20, thirty: 30, forty: 40, fifty: 50, hundred: 100 };
-
-  /** Parse "spent 12.50 on lunch at Cafe", "paid twenty dollars for uber" */
-  function parseVoice(text) {
-    const s = String(text || '').trim();
-    let amount = null;
-    const m = s.match(/(\d+(?:[.,]\d{1,2})?)/);
-    if (m) amount = parseFloat(m[1].replace(',', '.'));
-    else {
-      const w = s.toLowerCase().split(/\s+/).filter(x => x in NUM_WORDS);
-      if (w.length) {
-        amount = 0;
-        for (const x of w) amount = x === 'hundred' ? (amount || 1) * 100 : amount + NUM_WORDS[x];
-      }
-    }
-    if (!amount || amount <= 0) return null;
-    let desc = s.replace(/\b(i\s+)?(spent|paid|pay|add|log|bought|buy)\b/gi, '')
-      .replace(/\d+(?:[.,]\d{1,2})?/g, '').replace(/\b(dollars?|bucks|usd|euros?|pounds?)\b/gi, '')
-      .replace(/^\s*(on|for|at)\s+/i, '').replace(/\s+/g, ' ').trim();
-    for (const w of Object.keys(NUM_WORDS)) desc = desc.replace(new RegExp('\\b' + w + '\\b', 'gi'), '').trim();
-    desc = desc.replace(/^(on|for|at)\s+/i, '').trim();
-    return { amount, description: desc || 'Voice expense', category: guessCategory(desc) };
-  }
-
   /** Extract merchant, total, date from OCR text of a receipt. */
   function parseReceipt(text) {
     const lines = String(text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
@@ -237,7 +212,7 @@
     return { rows, total, csv };
   }
 
-  const api = { CATEGORIES, DEFAULT_RATES, convert, guessCategory, parseVoice, parseReceipt, periodRange, summary, budgetStatus,
+  const api = { CATEGORIES, DEFAULT_RATES, convert, guessCategory, parseReceipt, periodRange, summary, budgetStatus,
     insights, assistant, monthlyCost, addCycle, dueSoon, tripTotals, taxReport, csvCell, iso, byCategory, sumExpenses };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.Logic = api;
 })(typeof self !== 'undefined' ? self : this);

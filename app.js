@@ -69,7 +69,7 @@
     const cards = [''].concat(db.cards.map(c => c.id));
     const d = dialog(`
       <h3>${t.id ? 'Edit' : 'Add'} transaction</h3>
-      <div class="actions"><button type="button" data-a="voice">🎤 Voice</button><button type="button" data-a="scan">📷 Scan receipt</button><input id="rcpt" type="file" accept="image/*" capture="environment" hidden></div>
+      <div class="actions"><button type="button" data-a="scan">📷 Scan receipt</button><input id="rcpt" type="file" accept="image/*" capture="environment" hidden></div>
       <label>Type<select name="type"><option${t.type === 'expense' ? ' selected' : ''}>expense</option><option${t.type === 'income' ? ' selected' : ''}>income</option></select></label>
       <label>Amount<input name="amount" type="number" step="0.01" min="0.01" required value="${esc(t.amount)}"></label>
       <label>Currency<select name="currency">${opts(cur(), t.currency)}</select></label>
@@ -89,13 +89,6 @@
     const fill = p => { const f = d.querySelector('form').elements;
       if (p.amount != null) f.amount.value = p.amount; if (p.description) f.description.value = p.description;
       if (p.category) f.category.value = p.category; if (p.date) f.date.value = p.date; };
-    d.querySelector('[data-a=voice]').onclick = () => {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SR) return toast('Voice input not supported in this browser');
-      const r = new SR(); r.lang = navigator.language || 'en-US';
-      r.onresult = e => { const p = L.parseVoice(e.results[0][0].transcript); p ? (fill(p), toast('Heard: ' + e.results[0][0].transcript)) : toast("Couldn't find an amount"); };
-      r.onerror = e => toast('Voice error: ' + e.error); r.start(); toast('Listening… e.g. "spent 12 on lunch"');
-    };
     const file = d.querySelector('#rcpt');
     d.querySelector('[data-a=scan]').onclick = () => file.click();
     file.onchange = async () => {
