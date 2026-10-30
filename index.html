@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' blob: data:; connect-src *; worker-src 'self' blob: https://cdn.jsdelivr.net; child-src blob:">
+<meta name="theme-color" content="#0f766e">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
+<title>Expense Tracker</title>
+</head>
+<body>
+<div id="lock" class="lock" hidden>
+  <form id="lockForm" class="card">
+    <h2>🔒 Expense Tracker</h2>
+    <p id="lockMsg">Set a PIN/passphrase to encrypt your data on this device.</p>
+    <input id="pin" type="password" autocomplete="current-password" placeholder="PIN / passphrase" minlength="4" required>
+    <button class="primary">Unlock</button>
+    <p id="lockErr" class="err"></p>
+  </form>
+</div>
+<header><h1>💸 Expense Tracker</h1><button id="addBtn" class="primary">＋ Add</button></header>
+<main id="view"></main>
+<nav id="tabs"></nav>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status"></div>
+<script src="logic.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
